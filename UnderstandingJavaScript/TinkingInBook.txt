@@ -1,0 +1,15 @@
+1、要理解Javascript，首先放下对象和类的概念，回到数据和代码的本原。
+2、简单数据只有undefined，null，boolean，number和string这五种，而复杂数据只有一种——object。
+3、Javascript代码只体现为一种形式：就是function。
+4、typeof运算符来获取一个Javascript元素的类型。由于typeof是运算符，因此，可以有两用等价的写法：typeof x和typeof(x),加不加括号无所谓。typeof运算之后得到的结果是一个string类型的值：typeof typeof 123的结果一定是string。
+5、简单类型：
+undefined：代表一切未知的失误，啥都没有；可以将undefined赋值给任何变量或属性，但是并不意味清除了该变量，返回会因此多了一个属性；
+null：有那么一个概念，但没有东西；typeof(null) 返回object。
+boolean：正确： undefined==null,简单类型值、所有对象和函数转换为逻辑值时都是true，错误：undefined,null,"",0转换为逻辑值时就是false；
+number：typeof(NaN)和typeof(Infinity)都返回number；NaN!=NaN;Infinity/Infinity=NaN;
+string:字符串；
+"123"==123 true;
+"0123"==0123 false;javascript认为将0开头的证书常量当八进制数处理，所以后面的0123实际是八进制数；
+===表示全等，也就是数据值与数据类型都必须相等才是true。
+!==表示不全等；
+6、Javascript执行引擎并非一行一行分析执行程序，而是一段一段分析执行的。在同一段程序的分析执行中，定义式的函数语句会被提取出来有限之心，函数定义执行完之后，才会按顺序执行其他语句代码，也就是说，在第一次调用之前，第一个函数语句定义的代码逻辑，已经被第二个函数定义语句覆盖了。
