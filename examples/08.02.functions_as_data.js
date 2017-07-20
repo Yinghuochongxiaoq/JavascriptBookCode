@@ -1,8 +1,11 @@
 // We define some simple functions here
-function add(x,y) { return x + y; }
-function subtract(x,y) { return x - y; }
-function multiply(x,y) { return x * y; }
-function divide(x,y) { return x / y; }
+function add(x, y) { return x + y; }
+
+function subtract(x, y) { return x - y; }
+
+function multiply(x, y) { return x * y; }
+
+function divide(x, y) { return x / y; }
 
 // Here's a function that takes one of the above functions
 // as an argument and invokes it on two operands
@@ -12,15 +15,16 @@ function operate(operator, operand1, operand2) {
 
 // We could invoke this function like this to compute the value (2+3) + (4*5):
 var i = operate(add, operate(add, 2, 3), operate(multiply, 4, 5));
+console.log(i);
 
 // For the sake of the example, we implement the simple functions again, 
 // this time using function literals within an object literal;
 var operators = {
-    add:      function(x,y) { return x+y; },
-    subtract: function(x,y) { return x-y; },
-    multiply: function(x,y) { return x*y; },
-    divide:   function(x,y) { return x/y; },
-    pow:      Math.pow  // Works for predefined functions too
+    add: function(x, y) { return x + y; },
+    subtract: function(x, y) { return x - y; },
+    multiply: function(x, y) { return x * y; },
+    divide: function(x, y) { return x / y; },
+    pow: Math.pow // Works for predefined functions too
 };
 
 // This function takes the name of an operator, looks up that operator
@@ -34,5 +38,20 @@ function operate2(operation, operand1, operand2) {
 
 // Compute the value ("hello" + " " + "world") like this:
 var j = operate2("add", "hello", operate2("add", " ", "world"));
+console.log(j);
 // Using the predefined Math.pow() function:
 var k = operate2("pow", 10, 2);
+console.log(k);
+
+//计算阶乘，并将结果缓存至函数的属性中
+function factorial(n) {
+    if (isFinite(n) && n > 0 && n == Math.round(n)) {
+        if (!(n in factorial)) factorial[n] = n * factorial(n - 1);
+        return factorial[n];
+    } else return NaN;
+}
+//初始化缓存以保存这种基本情况
+factorial[1] = 1;
+
+var o = factorial(10);
+console.log(o);
