@@ -102,4 +102,57 @@ reduceRight()的工作原理和reduce()一样，不同的是它按照数组索�
 
 indexOf()和lastIndexOf()搜索整个数组中具有给定值的元素，返回找到的第一个元素的索引或者如果没有找到就返回-1。indexOf()从头至尾搜索，而lastIndexOf()则反向搜索。
 不接收一个函数作为其参数，第一个参数是需要搜索的值，第二个参数是可选的：它指定数组中的一个索引，从那里开始搜索。如果省略该参数，indexOf()从头开始搜索，而lastIndexOf()从尾开始搜索。第二个参数也可以是负数，它代表相对数组末尾的偏移量。
+
+数组推导
+data=[2,3,4,-5];//一个数组
+squares=[x*x for each(x in data)];//对每个元素求平方:[4,9,16,25]
+//如果数组元素是非负数，求它的平方根
+roots=[Math.sqrt(x) for each (x in data) if (x>=0)]
+
+//将一个对象的属性名放入新创建的数组中
+o={a:1,b:2,f:function(){}}
+let allkeys=[p for each (p in o)]
+let ownkeys=[p for (p in o) if (o.hasOwnProperty(p))]
+let notfuncs=[k for ([k,v] in Iterator(o)) if (typeof v!=="function")]
+
+将数组推导中的方括号替换成圆括号，它就成了一个生成器表达式。生成器表达式（generator expression）和数组推导非常类似（两者在圆括号内的语法几乎完全一样），只是她的返回值是一个生成器对象，而不是一个数组。和数组推导相比，使用生成器表达式的好处是可以惰性求职（lazy evaluation），只有在需要的时候求值而不是每次都计算求值。生成器只支持对值得顺序存取，而不是随机存取。和数组不同，生成器并没有索引。
+
+function map(i,f){//对于i的每个元素，生成器都会生成f(x)
+    for(let x in i) yield f(x);
+}
+
+有了生成器表达式后：
+let h=(f(x) for (x in g));
+
+函数简写：对于简单的函数，Javascript 1.8引入了一种简写形式：表达式闭包。如果函数只计算一个表达式并返回它的值，关键字return和花括号都可以省略，并将待计算的表达式紧接着放在参数列表之后。
+let succ=function(x) x+1,yes=function()true,no=function()false;
+
+XML直接量语法中使用花括号作为转义字符；
+
+内联形式Javascript引用；
+在XHTML中<script></script>标签的内容被当做其他内容一样对待。如果Javascript代码包含了<或&字符，那么这些字符就被解释成为XML标记。因此，如果要使用XHTML，最好把所有的Javascript代码放到一个CDATA部分里面：
+<script><![CDATA[
+    //这里是Javascript代码
+]]></script>
+
+外部文件中的脚本，使用<script src="filepath"></script>
+
+脚本类型，使用不标准的脚本语言，使用VBScript(只有IE支持)，必须用type属性指定脚本的MIME类型
+<script type="text/vbscript">这里是VBScript代码</script>type属性默认值时“text/javascript";
+
+<script defer src"deferred.js></script>
+<script async src="async.js></script>
+defer和async属性都像在告诉浏览器链接进来的脚本不会使用document.write()，也不会生成文档内容，因此浏览器可以在下载脚本时继续解析和渲染文档。defer属性使得浏览器延迟脚本的执行，知道文档的载入和解析完成，并可以操作。async属性使得浏览器可以尽快的执行脚本，而不用再下载脚本时阻塞文档解析。延迟的脚本会按他们在文档里出现顺序执行，而一部脚本在他们载入后执行，这意味着他们可能会无序执行；
+
+setTimeout()方法用来实现一个函数在指定的毫秒之后运行；setTimeout()返回一个值，这个值可以传递给clearTimeout()用于取消这个函数的执行。
+setInterval()和setTimeout()一样，只不过这个函数会在指定的毫秒数的间隔里重复调用；
+setInterval()也返回一个值，这个值可以传递给clearInterval()用于取消后续函数的调用。
+
+如果以0毫秒的超时时间来调用setTimeout()那么指定的函数不会立刻执行，相反，会把它放到队列中，等到前面处于等待状态的事件处理程序充不执行完成后再调用它。
+
+可编辑的内容，有两种方法来启用编辑功能，其一，设置任何标签的HTML contenteditable属性；其二，设置对应元素的Javascript contenteditable属性；<div id="editor" contenteditable="true">Click to edit</div>
+
+浏览器可能为表单字段和contenteditable元素支持自动拼写检查。添加spellcheck属性来显示开启拼写检查，而使用spellcheck=false来显示关闭该功能；Enter键另起一行，但不同的浏览器生成了不同的标记。有些开始了新的段落，而其他的只是插入了一个<br/>元素。
+
+浏览器大部分没有键盘快捷键。使用Document对象的execCommand()方法，这是Document的方法，而不是设置了contenteditable属性的元素的方法。
  */
